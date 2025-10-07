@@ -1,5 +1,20 @@
 import * as core from '@actions/core';
 
+var TLS_ENABLED = false;
+var url = core.getInput('gateway_url');
+var apiKey = core.getInput('api_key');
+
+// Check if url includes http or https
+if (!url.includes('http://') && !url.includes('https://')) {
+    core.setFailed('The URL must include http:// or https://');
+}
+
+// Check if the URL uses HTTPS
+if (url.includes('https://')) {
+    core.info('TLS is enabled for the Ignition Gateway connection.');
+    TLS_ENABLED = true;
+}
+
 async function configScan(): Promise<void> {
 }
 

@@ -6,4 +6,7 @@ inputs:
   api_key:
     description: 'The API key for the Ignition Gateway'
     required: true
-  
+
+runs:
+  using: node20
+  main: dist/index.js
