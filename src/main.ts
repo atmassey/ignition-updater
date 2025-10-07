@@ -16,9 +16,11 @@ if (url.includes('https://')) {
 }
 
 async function configScan(): Promise<void> {
+    core.info('Performing configuration scan request...');
 }
 
 async function projectScan(): Promise<void> {
+    core.info('Performing project scan request...');
 }
 
 export async function run(): Promise<void> {
