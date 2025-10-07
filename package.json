@@ -21,5 +21,8 @@
   "homepage": "https://github.com/atmassey/ignition-updater#readme",
   "devDependencies": {
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1"
   }
 }
