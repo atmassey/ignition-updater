@@ -17,10 +17,41 @@ if (url.includes('https://')) {
 
 async function configScan(): Promise<void> {
     core.info('Performing configuration scan request...');
+    let endpoint = `${url}/data/api/v1/scan/config`
+    try {
+    // Perform the post request for config scan
+    await fetch(endpoint, {
+        method: 'POST'
+      }).then((response) => {
+        if (!response.ok) {
+          core.error(`Failed to initiate config scan: ${response.statusText}`)
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      }).finally(() => {
+        core.info('Config scan completed')
+      });
+    } catch (error: any) {
+        core.setFailed(`Config scan request failed: ${error.message}`);
+    }
 }
 
 async function projectScan(): Promise<void> {
     core.info('Performing project scan request...');
+    let endpoint = `${url}/data/api/v1/scan/projects`
+    try {
+        await fetch(endpoint, {
+            method: 'POST'
+        }).then((response) => {
+            if (!response.ok) {
+                core.error(`Failed to initiate project scan: ${response.statusText}`)
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        }).finally(() => {
+            core.info('Project scan completed')
+        });
+    } catch (error: any) {
+        core.setFailed(`Project scan request failed: ${error.message}`);
+    }
 }
 
 export async function run(): Promise<void> {
