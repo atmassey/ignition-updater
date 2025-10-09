@@ -1,6 +1,6 @@
 inputs:
   gateway_url:
-    description: 'The URL of the Ignition Gateway (e.g. http://localhost:8088)'
+    description: 'The URL of the Ignition Gateway (e.g. localhost:8088)'
     required: true
     default: 'localhost:8088'
   api_token:
