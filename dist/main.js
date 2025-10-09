@@ -71,7 +71,8 @@ async function configScan() {
         });
     }
     catch (error) {
-        core.setFailed(`Config scan request failed: ${error.message}`);
+        core.error(`Config scan request failed: ${error.message}`);
+        throw error;
     }
 }
 async function projectScan() {
@@ -101,6 +102,7 @@ async function projectScan() {
     }
     catch (error) {
         core.error(`Project scan request failed: ${error.message}`);
+        throw error;
     }
 }
 async function run() {

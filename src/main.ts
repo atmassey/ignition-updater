@@ -36,7 +36,8 @@ async function configScan(): Promise<void> {
         core.info('Config scan completed')
       });
     } catch (error: any) {
-        core.setFailed(`Config scan request failed: ${error.message}`);
+        core.error(`Config scan request failed: ${error.message}`);
+        throw error;
     }
 }
 
@@ -65,6 +66,7 @@ async function projectScan(): Promise<void> {
         });
     } catch (error: any) {
         core.error(`Project scan request failed: ${error.message}`);
+        throw error;
     }
 }
 
