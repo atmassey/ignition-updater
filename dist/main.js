@@ -100,7 +100,7 @@ async function projectScan() {
         });
     }
     catch (error) {
-        core.setFailed(`Project scan request failed: ${error.message}`);
+        core.error(`Project scan request failed: ${error.message}`);
     }
 }
 async function run() {
@@ -113,6 +113,7 @@ async function run() {
         core.info('Project scan completed successfully.');
     }
     catch (error) {
-        core.setFailed(`Action failed with error: ${error.message}`);
+        core.error(`Action failed with error: ${error.message}`);
+        throw error;
     }
 }

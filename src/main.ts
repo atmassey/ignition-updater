@@ -64,7 +64,7 @@ async function projectScan(): Promise<void> {
             core.info('Project scan completed')
         });
     } catch (error: any) {
-        core.setFailed(`Project scan request failed: ${error.message}`);
+        core.error(`Project scan request failed: ${error.message}`);
     }
 }
 
@@ -77,6 +77,7 @@ export async function run(): Promise<void> {
         await projectScan();
         core.info('Project scan completed successfully.');
     } catch (error: any) {
-        core.setFailed(`Action failed with error: ${error.message}`);
+        core.error(`Action failed with error: ${error.message}`);
+        throw error;
     }
 }
