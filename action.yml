@@ -3,9 +3,13 @@ inputs:
     description: 'The URL of the Ignition Gateway (e.g. http://localhost:8088)'
     required: true
     default: 'http://localhost:8088'
-  api_key:
+  api_token:
     description: 'The API key for the Ignition Gateway'
     required: true
+  tls_enabled:
+    description: 'Set to true if the Ignition Gateway is using TLS/SSL (https)'
+    required: false
+    default: false
 
 runs:
   using: node20

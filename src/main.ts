@@ -2,27 +2,32 @@ import * as core from '@actions/core';
 
 var TLS_ENABLED = false;
 var url = core.getInput('gateway_url');
-var apiKey = core.getInput('api_key');
+var apiToken = core.getInput('api_token');
+var tlsEnabled = core.getInput('tls_enabled');
 
-// Check if url includes http or https
-if (!url.includes('http://') && !url.includes('https://')) {
-    core.setFailed('The URL must include http:// or https://');
-}
-
-// Check if the URL uses HTTPS
-if (url.includes('https://')) {
-    core.info('TLS is enabled for the Ignition Gateway connection.');
+if (tlsEnabled && tlsEnabled.toLowerCase() === 'true') {
     TLS_ENABLED = true;
 }
 
 async function configScan(): Promise<void> {
-    core.info('Performing configuration scan request...');
-    let endpoint = `${url}/data/api/v1/scan/config`
+    core.info('Building configuration scan endpoint...');
+    let endpoint;
+    if (TLS_ENABLED) {
+        endpoint = `https://${url}/data/api/v1/scan/config`
+    } else {
+        endpoint = `http://${url}/data/api/v1/scan/config`
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    }
     try {
+    core.info('Performing configuration scan request...');
     // Perform the post request for config scan
     await fetch(endpoint, {
-        method: 'POST'
-      }).then((response) => {
+        method: 'POST',
+        headers: {
+            'X-Ignition-API-Token': apiToken,
+            'Accept': 'application/json',
+        }
+    }).then((response) => {
         if (!response.ok) {
           core.error(`Failed to initiate config scan: ${response.statusText}`)
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -37,10 +42,19 @@ async function configScan(): Promise<void> {
 
 async function projectScan(): Promise<void> {
     core.info('Performing project scan request...');
-    let endpoint = `${url}/data/api/v1/scan/projects`
+    let endpoint;
+    if (TLS_ENABLED) {
+        endpoint = `https://${url}/data/api/v1/scan/projects`
+    } else {
+        endpoint = `http://${url}/data/api/v1/scan/projects`
+    }
     try {
         await fetch(endpoint, {
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'X-Ignition-API-Token': apiToken,
+                'Accept': 'application/json',
+            }
         }).then((response) => {
             if (!response.ok) {
                 core.error(`Failed to initiate project scan: ${response.statusText}`)
