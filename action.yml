@@ -1,3 +1,5 @@
+name: 'Ignition Project and Config Updater Action'
+description: 'API requests will be made to the project and config scan endpoints'
 inputs:
   gateway_url:
     description: 'The URL of the Ignition Gateway (e.g. localhost:8088)'
