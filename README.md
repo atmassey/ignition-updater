@@ -25,55 +25,51 @@ This action connects to an Ignition Gateway and performs both configuration and 
 ### Basic Usage
 
 ```yaml
-- name: Update Ignition Gateway
-  uses: atmassey/ignition-updater@v1
-  with:
-    gateway_url: 'your-gateway.example.com:8088'
-    api_token: ${{ secrets.IGNITION_API_TOKEN }}
+name: Gateway Updater
+on:
+  push:
+    branches:
+      main
+
+jobs:
+
+  update:
+    runs-on: self-hosted
+    steps:
+      - name: Update Ignition Gateway
+        uses: atmassey/ignition-updater@v1.0.5
+        with:
+          gateway_url: 'localhost:8088'
+          api_token: ${{ secrets.IGNITION_API_TOKEN }}
 ```
 
 ### With TLS/SSL Enabled
 
 ```yaml
-- name: Update Ignition Gateway (HTTPS)
-  uses: atmassey/ignition-updater@v1
-  with:
-    gateway_url: 'your-gateway.example.com:8043'
-    api_token: ${{ secrets.IGNITION_API_TOKEN }}
-    tls_enabled: true
-```
-
-### Complete Workflow Example
-
-```yaml
-name: Deploy to Ignition Gateway
-
+name: Gateway Updater
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches:
+      main
 
 jobs:
-  update-gateway:
-    runs-on: ubuntu-latest
-    
+
+  update:
+    runs-on: self-hosted
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Update Ignition Gateway
-      uses: atmassey/ignition-updater@v1
-      with:
-        gateway_url: 'production-gateway.company.com:8088'
-        api_token: ${{ secrets.IGNITION_API_TOKEN }}
-        tls_enabled: true
+      - name: Update Ignition Gateway
+        uses: atmassey/ignition-updater@v1.0.5
+        with:
+          gateway_url: 'localhost:8088'
+          api_token: ${{ secrets.IGNITION_API_TOKEN }}
+          tls_enabled: true
 ```
 
 ## Prerequisites
 
 1. **Ignition Gateway**: You need access to an Ignition Gateway running v8.3
 2. **API Token**: Generate an API token in your Ignition Gateway for authentication
-3. **Network Access**: The GitHub runner must be able to reach your Ignition Gateway
+3. **Network Access**: The GitHub runner must be able to reach your Ignition Gateway (self-host runner)
 
 ### Setting up API Token
 
