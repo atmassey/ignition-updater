@@ -37,7 +37,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Update Ignition Gateway
-        uses: atmassey/ignition-updater@v1.0.5
+        uses: atmassey/ignition-updater@v2
         with:
           gateway_url: 'localhost:8088'
           api_token: ${{ secrets.IGNITION_API_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Update Ignition Gateway
-        uses: atmassey/ignition-updater@v1.0.5
+        uses: atmassey/ignition-updater@v2
         with:
           gateway_url: 'localhost:8088'
           api_token: ${{ secrets.IGNITION_API_TOKEN }}
